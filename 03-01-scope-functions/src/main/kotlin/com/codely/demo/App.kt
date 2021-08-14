@@ -8,7 +8,7 @@ class App
 
 fun main() {
     println("Please enter a date with the format <yyyy-MM-dd>")
-    val date = supportNullableString(readLine())
+    supportNullableString(readLine())
     .takeUnless {
         it.isNullOrEmpty()
     }?.let {
@@ -20,16 +20,13 @@ fun main() {
         }
     }.also {
         println("You wrote the date $it")
-    }
-    val difference = date.takeIf {
-            date != null
+    }.takeIf {
+            it != null
     }?.run {
         val currentDate = LocalDate.now()
-        Period.between(this, currentDate).years
-    }
-
-    with(difference) {
-        println("The difference between the date you wrote an today is $this years")
+        with(Period.between(this, currentDate).years) {
+            println("The difference between the date you wrote an today is $this years")
+        }
     }
 
     println("Bye!")
