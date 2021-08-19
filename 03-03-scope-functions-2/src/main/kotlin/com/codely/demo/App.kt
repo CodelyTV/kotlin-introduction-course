@@ -10,7 +10,7 @@ fun main() {
     println("Please enter a date with the format <yyyy-MM-dd>")
     supportNullableString(readLine())
     .takeUnless {
-        it.isNullOrEmpty()
+        it.isNullOrEmpty() || it.isNullOrBlank()
     }?.let {
         LocalDate.parse(it)
     }.apply {
