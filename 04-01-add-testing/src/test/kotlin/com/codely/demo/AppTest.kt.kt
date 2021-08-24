@@ -1,65 +1,82 @@
 package com.codely.demo
 
 import org.junit.jupiter.api.Test
-import org.junit.jupiter.api.assertThrows
+import org.mockito.kotlin.any
+import org.mockito.kotlin.doNothing
+import org.mockito.kotlin.mock
+import org.mockito.kotlin.verify
+import org.mockito.kotlin.whenever
 import java.time.LocalDate
-import java.time.format.DateTimeParseException
-import kotlin.test.assertContains
 
 class AppTest {
 
     @Test
     fun `should calculate the difference and return 31 years`() {
-        val app = AppSewing()
-        app.execute("1990-08-31")
+        val reader = mock<Reader>()
+        val writer = mock<Writer>()
+        val app = AppSewing(reader, writer)
+        whenever(reader.read()).thenReturn("1990-08-31")
+        doNothing().`when`(writer).write(any())
 
-        assertContains(app.lastMessage, "The difference between the date you wrote an today is 31 years")
+        app.execute()
+
+        verify(writer).write("The difference between the date you wrote an today is 31 years")
     }
 
     @Test
     fun `should calculate the difference and return 11 months`() {
-        val app = AppSewing()
-        app.execute("2020-09-01")
+        val reader = mock<Reader>()
+        val writer = mock<Writer>()
+        val app = AppSewing(reader, writer)
+        whenever(reader.read()).thenReturn("2020-09-01")
+        doNothing().`when`(writer).write(any())
 
-        assertContains(app.lastMessage, "The difference between the date you wrote an today is 11 months")
+        app.execute()
+
+        verify(writer).write("The difference between the date you wrote an today is 11 months")
     }
 
     @Test
     fun `should calculate the difference and return 2 days`() {
-        val app = AppSewing()
-        app.execute("2021-08-29")
+        val reader = mock<Reader>()
+        val writer = mock<Writer>()
+        val app = AppSewing(reader, writer)
+        doNothing().`when`(writer).write(any())
+        whenever(reader.read()).thenReturn("2021-08-29")
 
-        assertContains(app.lastMessage, "The difference between the date you wrote an today is 2 days")
-    }
+        app.execute()
 
-    @Test
-    fun `fail when the introduced date is malformed`() {
-        val app = AppSewing()
-        assertThrows<DateTimeParseException> { app.execute("2021-8-31") }
+        verify(writer).write("The difference between the date you wrote an today is 2 days")
     }
 
     @Test
     fun `fail when the introduced date is empty`() {
-        val app = AppSewing()
-        app.execute("")
+        val reader = mock<Reader>()
+        val writer = mock<Writer>()
+        val app = AppSewing(reader, writer)
+        doNothing().`when`(writer).write(any())
+        whenever(reader.read()).thenReturn("")
 
-        assertContains(app.lastMessage, "The introduced date <> is not valid")
+        app.execute()
+
+        verify(writer).write("The introduced date <> is not valid")
     }
 
     @Test
     fun `fail when the introduced date is blank`() {
-        val app = AppSewing()
-        app.execute(" ")
+        val reader = mock<Reader>()
+        val writer = mock<Writer>()
+        val app = AppSewing(reader, writer)
+        doNothing().`when`(writer).write(any())
+        whenever(reader.read()).thenReturn(" ")
 
-        assertContains(app.lastMessage, "The introduced date < > is not valid")
+        app.execute()
+
+        verify(writer).write("The introduced date < > is not valid")
     }
 
 }
 
-class AppSewing: App() {
-    var lastMessage: String = ""
+class AppSewing(reader: Reader, writer: Writer) : App(reader, writer) {
     override fun currentDate() = LocalDate.parse("2021-08-31")
-    override fun show(message:String) {
-        lastMessage = "$lastMessage | $message"
-    }
 }
