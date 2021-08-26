@@ -4,12 +4,12 @@ import java.time.LocalDate
 import java.time.Period
 import kotlin.system.exitProcess
 
-open class Reader {
-    open fun read() = readLine()
+class Reader {
+    fun read() = readLine()
 }
 
-open class Writer {
-    open fun write(message: String) = println(message)
+class Writer {
+    fun write(message: String) = println(message)
 }
 open class App(private val reader: Reader, private val writer: Writer) {
     fun execute() {

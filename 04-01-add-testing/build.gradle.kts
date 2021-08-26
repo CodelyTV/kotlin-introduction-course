@@ -20,7 +20,11 @@ dependencies {
     implementation("com.diffplug.spotless:spotless-plugin-gradle:5.7.0")
 
     testImplementation("org.jetbrains.kotlin:kotlin-test")
+
     testImplementation("org.mockito.kotlin:mockito-kotlin:3.2.0")
+    testImplementation("org.mockito:mockito-inline:3.9.0")
+    testImplementation("org.mockito:mockito-core:3.9.0")
+
     testImplementation("io.mockk:mockk:1.12.0")
 }
 
