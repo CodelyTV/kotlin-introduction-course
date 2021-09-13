@@ -1,5 +1,7 @@
 package com.codely.demo.cat
 
+import java.lang.IllegalArgumentException
+
 sealed class CatCreationException(override val message: String?) : IllegalArgumentException(message)
 
 class InvalidName(name: String?) : CatCreationException("<$name> is not a valid name")

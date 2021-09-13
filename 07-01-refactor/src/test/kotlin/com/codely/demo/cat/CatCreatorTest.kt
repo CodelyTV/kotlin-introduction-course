@@ -5,10 +5,10 @@ import com.codely.demo.shared.Reader
 import com.codely.demo.shared.Writer
 import io.mockk.every
 import io.mockk.mockk
-import java.time.LocalDate
-import kotlin.test.assertEquals
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
+import java.time.LocalDate
+import kotlin.test.assertEquals
 
 internal class CatCreatorTest {
     private val id = "92efe4c8-fab9-4cb0-82d9-5c75eeca2dc1"
@@ -32,19 +32,21 @@ internal class CatCreatorTest {
         val creator = CatCreator(reader, writer, clock, repository)
         creator.create()
 
-        val expectedCat = Cat.vaccinatedWith(
+        val expectedCat = Cat.from(
             id = Cat.Id.from(id),
             name = Cat.Name.from(name),
             origin = Cat.Origin.from(origin),
-            color = color,
-            birthDate = LocalDate.parse(birthDate),
+            color = Cat.Color.from(color),
+            birthDate = Cat.BirthDate.from(birthDate),
+            vaccinated = Cat.Vaccinated(true),
             createdAt = fixedDate
         )
 
         assertEquals(
             mapOf(
                 expectedCat.id to expectedCat
-            ), repository.findAll()
+            ),
+            repository.findAll()
         )
     }
 
@@ -60,19 +62,21 @@ internal class CatCreatorTest {
         val creator = CatCreator(reader, writer, clock, repository)
         creator.create()
 
-        val expectedCat = Cat.notVaccinatedWith(
+        val expectedCat = Cat.from(
             id = Cat.Id.from(id),
             name = Cat.Name.from(name),
             origin = Cat.Origin.from(origin),
             color = Cat.Color.from(color),
-            birthDate = LocalDate.parse(birthDate),
+            birthDate = Cat.BirthDate.from(birthDate),
+            vaccinated = Cat.Vaccinated(false),
             createdAt = fixedDate
         )
 
         assertEquals(
             mapOf(
                 expectedCat.id to expectedCat
-            ), repository.findAll()
+            ),
+            repository.findAll()
         )
     }
 
@@ -153,4 +157,58 @@ internal class CatCreatorTest {
         val creator = CatCreator(reader, writer, clock, repository)
         assertThrows<InvalidColor> { creator.create() }
     }
+
+    @Test
+    fun `should fail creating a cat with invalid color`() {
+        val reader = mockk<Reader>()
+        val writer = mockk<Writer>(relaxed = true)
+        val clock = mockk<Clock>()
+        val repository = InMemoryCatRepository()
+        every { clock.now() } returns fixedDate
+        every { reader.read() } returns id andThen name andThen origin andThen vaccinated andThen "orange" andThen birthDate
+
+        val creator = CatCreator(reader, writer, clock, repository)
+        assertThrows<InvalidColor> { creator.create() }
+    }
+
+    @Test
+    fun `should fail creating a cat with a non uuid`() {
+        val reader = mockk<Reader>()
+        val writer = mockk<Writer>(relaxed = true)
+        val clock = mockk<Clock>()
+        val repository = InMemoryCatRepository()
+        every { clock.now() } returns fixedDate
+        every { reader.read() } returns "1" andThen name andThen origin andThen vaccinated andThen color andThen birthDate
+
+        val creator = CatCreator(reader, writer, clock, repository)
+        assertThrows<InvalidId> { creator.create() }
+    }
+
+    @Test
+    fun `should fail creating a cat with invalid vaccinated value`() {
+        val reader = mockk<Reader>()
+        val writer = mockk<Writer>(relaxed = true)
+        val clock = mockk<Clock>()
+        val repository = InMemoryCatRepository()
+        every { clock.now() } returns fixedDate
+        every { reader.read() } returns id andThen name andThen origin andThen "maybe" andThen color andThen birthDate
+
+        val creator = CatCreator(reader, writer, clock, repository)
+        assertThrows<InvalidVaccinated> { creator.create() }
+    }
+
+    @Test
+    fun `should fail creating a cat with invalid birth date value`() {
+        val reader = mockk<Reader>()
+        val writer = mockk<Writer>(relaxed = true)
+        val clock = mockk<Clock>()
+        val repository = InMemoryCatRepository()
+        every { clock.now() } returns fixedDate
+        every { reader.read() } returns id andThen name andThen origin andThen vaccinated andThen color andThen "today"
+
+        val creator = CatCreator(reader, writer, clock, repository)
+        assertThrows<InvalidBirthDate> { creator.create() }
+    }
+
+
 }
