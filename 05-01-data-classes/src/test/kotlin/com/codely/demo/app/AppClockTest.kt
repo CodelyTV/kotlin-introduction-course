@@ -25,7 +25,7 @@ class AppClockTest {
         every { clock.now() } returns LocalDate.of(2021, 8, 31)
         every { reader.read() } returns "1990-08-31"
 
-        val app = AppClock(reader, writer, clock)
+        val app = App(reader, writer, clock)
 
         app.execute()
 
@@ -40,7 +40,7 @@ class AppClockTest {
         val clock = mockk<Clock>()
         every { clock.now() } returns LocalDate.of(2021, 8, 31)
 
-        val app = AppClock(reader, writer, clock)
+        val app = App(reader, writer, clock)
         app.execute()
 
         verify { writer.write("The difference between the date you wrote an today is 11 months") }
@@ -54,7 +54,7 @@ class AppClockTest {
         val clock = mockk<Clock>()
         every { clock.now() } returns LocalDate.of(2021, 8, 31)
 
-        val app = AppClock(reader, writer, clock)
+        val app = App(reader, writer, clock)
         app.execute()
 
         verify { writer.write("The difference between the date you wrote an today is 2 days") }
@@ -68,7 +68,7 @@ class AppClockTest {
         val clock = mockk<Clock>()
         every { clock.now() } returns LocalDate.of(2021, 8, 31)
 
-        val app = AppClock(reader, writer, clock)
+        val app = App(reader, writer, clock)
         app.execute()
 
         verify { writer.write("The introduced date <> is not valid") }
@@ -82,7 +82,7 @@ class AppClockTest {
         val clock = mockk<Clock>()
         every { clock.now() } returns LocalDate.of(2021, 8, 31)
 
-        val app = AppClock(reader, writer, clock)
+        val app = App(reader, writer, clock)
         app.execute()
 
         verify { writer.write("The introduced date < > is not valid") }

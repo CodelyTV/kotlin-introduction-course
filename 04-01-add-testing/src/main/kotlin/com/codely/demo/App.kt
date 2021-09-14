@@ -51,8 +51,4 @@ open class App(private val reader: Reader, private val writer: Writer) {
     }
 }
 
-fun main() {
-    App(Reader(), Writer()).execute()
-}
-
 private fun supportNullableString(line: String?) = line

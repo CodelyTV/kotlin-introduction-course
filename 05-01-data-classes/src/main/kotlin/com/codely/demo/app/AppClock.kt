@@ -10,7 +10,7 @@ class Clock() {
     fun now() = LocalDate.now()
 }
 
-class AppClock(
+class App(
     private val reader: Reader,
     private val writer: Writer,
     private val clock: Clock
@@ -51,8 +51,4 @@ class AppClock(
             days > 0 -> writer.write("The difference between the date you wrote an today is $days days")
         }
     }
-}
-
-fun main() {
-    App(Reader(), Writer()).execute()
 }

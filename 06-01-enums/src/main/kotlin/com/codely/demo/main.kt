@@ -5,5 +5,5 @@ import com.codely.demo.shared.Reader
 import com.codely.demo.shared.Writer
 
 fun main() {
-    App(Reader(), Writer()).execute()
+    AppClock(Reader(), Writer(), Clock()).execute()
 }

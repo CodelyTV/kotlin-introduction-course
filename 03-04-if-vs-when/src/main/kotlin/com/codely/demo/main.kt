@@ -4,8 +4,6 @@ import java.time.LocalDate
 import java.time.Period
 import kotlin.system.exitProcess
 
-class App
-
 fun main() {
     println("Please enter a date with the format <yyyy-MM-dd>")
     supportNullableString(readLine())
@@ -23,18 +21,17 @@ fun main() {
     }.takeIf {
             it != null
     }?.run {
-        this.calculateDifferenceUntilToday()
+        val currentDate = LocalDate.now()
+        kotlin.with(Period.between(this, currentDate)) {
+            when {
+                this.years > 0 -> println("The difference between the date you wrote an today is ${this.years} years")
+                this.months > 0 -> println("The difference between the date you wrote an today is ${this.months} months")
+                this.days > 0 -> println("The difference between the date you wrote an today is ${this.days} days")
+            }
+        }
     }
 
     println("Bye!")
 }
 
 private fun supportNullableString(line: String?) = line
-
-private fun LocalDate.calculateDifferenceUntilToday() = kotlin.with(Period.between(this, LocalDate.now())) {
-    when {
-        this.years > 0 -> println("The difference between the date you wrote an today is ${this.years} years")
-        this.months > 0 -> println("The difference between the date you wrote an today is ${this.months} months")
-        this.days > 0 -> println("The difference between the date you wrote an today is ${this.days} days")
-    }
-}
