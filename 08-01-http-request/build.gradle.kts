@@ -20,8 +20,8 @@ dependencies {
     implementation("org.jetbrains.kotlin:kotlin-bom")
     implementation("org.jetbrains.kotlin:kotlin-reflect")
     implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
-    implementation("khttp:khttp:1.0.0")
     implementation ("org.http4k:http4k-core:4.12.3.0")
+    implementation("org.json:json:20210307")
 
     testImplementation("org.jetbrains.kotlin:kotlin-test")
     testImplementation("io.mockk:mockk:1.12.0")

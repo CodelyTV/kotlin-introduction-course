@@ -6,5 +6,4 @@ interface BreedClient {
     fun findAll(): JSONArray
 }
 
-class BreedClientException(override val message: String = "Something went wrong searching the breed list"): RuntimeException()
-
+class BreedClientException(override val message: String = "Something went wrong searching the breed list") : RuntimeException()

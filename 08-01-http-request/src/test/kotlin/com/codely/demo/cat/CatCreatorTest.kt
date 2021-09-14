@@ -39,7 +39,8 @@ internal class CatCreatorTest {
         val searcher = BreedSearcher(client)
         every { clock.now() } returns fixedDate
         every { reader.read() } returns id andThen name andThen origin andThen vaccinated andThen color andThen birthDate andThen breed
-        every { client.findAll() } returns JSONArray("""
+        every { client.findAll() } returns JSONArray(
+            """
             [{
                 "alt_names": "",
                 "experimental": 0,
@@ -59,7 +60,8 @@ internal class CatCreatorTest {
                 "weight_imperial": "7  -  10",
                 "wikipedia_url": "https://en.wikipedia.org/wiki/Abyssinian_(cat)"
               }]
-            """.trimIndent())
+            """.trimIndent()
+        )
 
         val creator = CatCreator(reader, writer, clock, repository, searcher)
         creator.create()
@@ -93,7 +95,8 @@ internal class CatCreatorTest {
         val searcher = BreedSearcher(client)
         every { clock.now() } returns fixedDate
         every { reader.read() } returns id andThen name andThen origin andThen notVaccinated andThen color andThen birthDate andThen breed
-        every { client.findAll() } returns JSONArray("""
+        every { client.findAll() } returns JSONArray(
+            """
             [{
                 "alt_names": "",
                 "experimental": 0,
@@ -113,7 +116,8 @@ internal class CatCreatorTest {
                 "weight_imperial": "7  -  10",
                 "wikipedia_url": "https://en.wikipedia.org/wiki/Abyssinian_(cat)"
               }]
-            """.trimIndent())
+            """.trimIndent()
+        )
 
         val creator = CatCreator(reader, writer, clock, repository, searcher)
         creator.create()
@@ -283,7 +287,7 @@ internal class CatCreatorTest {
         every { clock.now() } returns fixedDate
         every { reader.read() } returns id andThen name andThen origin andThen vaccinated andThen color andThen "today"
 
-        val creator = CatCreator(reader, writer, clock, repository,searcher)
+        val creator = CatCreator(reader, writer, clock, repository, searcher)
         assertThrows<InvalidBirthDate> { creator.create() }
     }
 
@@ -296,7 +300,8 @@ internal class CatCreatorTest {
         val client = mockk<BreedClient>()
         val searcher = BreedSearcher(client)
         every { clock.now() } returns fixedDate
-        every { client.findAll() } returns JSONArray("""
+        every { client.findAll() } returns JSONArray(
+            """
             [{
                 "alt_names": "",
                 "experimental": 0,
@@ -316,12 +321,11 @@ internal class CatCreatorTest {
                 "weight_imperial": "7  -  10",
                 "wikipedia_url": "https://en.wikipedia.org/wiki/Abyssinian_(cat)"
               }]
-            """.trimIndent())
+            """.trimIndent()
+        )
         every { reader.read() } returns id andThen name andThen origin andThen vaccinated andThen color andThen birthDate andThen "Invalid Breed"
 
-        val creator = CatCreator(reader, writer, clock, repository,searcher)
+        val creator = CatCreator(reader, writer, clock, repository, searcher)
         assertThrows<InvalidBreed> { creator.create() }
     }
-
-
 }
