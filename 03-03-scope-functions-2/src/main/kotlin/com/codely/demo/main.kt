@@ -4,8 +4,6 @@ import java.time.LocalDate
 import java.time.Period
 import kotlin.system.exitProcess
 
-class App
-
 fun main() {
     println("Please enter a date with the format <yyyy-MM-dd>")
     supportNullableString(readLine())

@@ -52,7 +52,3 @@ class AppClock(
         }
     }
 }
-
-fun main() {
-    App(Reader(), Writer()).execute()
-}
