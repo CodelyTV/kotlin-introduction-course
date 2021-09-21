@@ -28,14 +28,14 @@ class CatCreator(
             val birthDate = Cat.BirthDate.from(obtainInput("When did your cat birth <yyyy-MM-dd>?"))
             val breed = obtainBreed()
             Cat.from(
-                id = id,
-                name = name,
-                origin = origin,
-                birthDate = birthDate,
-                color = color,
-                vaccinated = vaccinated,
-                breed = breed,
-                createdAt = clock.now(),
+                id,
+                name,
+                origin,
+                birthDate,
+                color,
+                vaccinated,
+                clock.now(),
+                breed,
             ).apply {
                 repository.save(this)
             }.also {

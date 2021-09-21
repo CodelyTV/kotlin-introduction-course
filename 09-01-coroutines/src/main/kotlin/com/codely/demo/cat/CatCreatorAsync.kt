@@ -29,14 +29,14 @@ class CatCreatorAsync(
         return runBlocking {
             val breed = obtainBreed(breedList.await())
             Cat.from(
-                id = id,
-                name = name,
-                origin = origin,
-                birthDate = birthDate,
-                color = color,
-                vaccinated = vaccinated,
-                breed = breed,
-                createdAt = clock.now(),
+                id,
+                name,
+                origin,
+                birthDate,
+                color,
+                vaccinated,
+                clock.now(),
+                breed,
             ).apply {
                 repository.save(this)
             }.also {
