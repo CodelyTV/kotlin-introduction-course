@@ -7,7 +7,7 @@ import org.http4k.core.Request
 import org.http4k.core.Status
 import org.json.JSONArray
 
-class HttpBreedClient : BreedClient {
+class HttpBreedRepository : BreedRepository {
     override fun findAll(): JSONArray {
         val request = Request(Method.GET, "https://api.thecatapi.com/v1/breeds")
             .header("x-api-key", "d3206728-abc1-4295-9b33-ba343b92ec84")
