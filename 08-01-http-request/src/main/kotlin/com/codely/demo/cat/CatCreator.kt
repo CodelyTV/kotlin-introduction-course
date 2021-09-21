@@ -23,14 +23,14 @@ class CatCreator(
         val breed = obtainBreed()
 
         return Cat.from(
-            id = id,
-            name = name,
-            origin = origin,
-            birthDate = birthDate,
-            color = color,
-            vaccinated = vaccinated,
-            breed = breed,
-            createdAt = clock.now(),
+            id,
+            name,
+            origin,
+            birthDate,
+            color,
+            vaccinated,
+            clock.now(),
+            breed
         ).apply {
             repository.save(this)
         }.also {
