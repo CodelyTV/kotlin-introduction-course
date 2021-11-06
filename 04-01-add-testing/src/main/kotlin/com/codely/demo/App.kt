@@ -11,7 +11,10 @@ class Reader {
 class Writer {
     fun write(message: String) = println(message)
 }
-open class App(private val reader: Reader, private val writer: Writer) {
+class Clock {
+    fun now() = LocalDate.now()
+}
+open class App(private val reader: Reader, private val writer: Writer, private val clock: Clock) {
     fun execute() {
         writer.write("Please enter a date with the format <yyyy-MM-dd>")
         val line = reader.read()
@@ -32,17 +35,14 @@ open class App(private val reader: Reader, private val writer: Writer) {
                 }
             }.also {
                 writer.write("You wrote the date $it")
-            }.takeIf {
-                it != null
             }?.run {
-                this.calculateDifferenceUntilToday()
+                calculateDifferenceUntilToday()
             }
 
         writer.write("Bye!")
     }
 
-    protected open fun currentDate(): LocalDate = LocalDate.now()
-    private fun LocalDate.calculateDifferenceUntilToday() = kotlin.with(Period.between(this, currentDate())) {
+    private fun LocalDate.calculateDifferenceUntilToday() = with(Period.between(this, clock.now())) {
         when {
             years > 0 -> writer.write("The difference between the date you wrote an today is $years years")
             months > 0 -> writer.write("The difference between the date you wrote an today is $months months")
