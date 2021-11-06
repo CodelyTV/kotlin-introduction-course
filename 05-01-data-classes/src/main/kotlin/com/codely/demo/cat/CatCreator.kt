@@ -1,6 +1,6 @@
 package com.codely.demo.cat
 
-import com.codely.demo.app.Clock
+import com.codely.demo.shared.Clock
 import com.codely.demo.shared.Reader
 import com.codely.demo.shared.Writer
 import java.time.LocalDate
@@ -21,7 +21,7 @@ class CatCreator(val reader: Reader, val writer: Writer, val clock: Clock) {
         writer.write("When did your cat birth?")
         val birthDate = reader.read()
 
-        if (name.isNullOrBlank() || name.isNullOrEmpty() || origin.isNullOrEmpty() || origin.isNullOrBlank()) {
+        if (name.isNullOrBlank() || name.isNullOrEmpty() || origin.isNullOrEmpty() || origin.isNullOrBlank() || vaccinated.isNullOrEmpty() || vaccinated.isNullOrBlank() || dewormed.isNullOrEmpty() || dewormed.isNullOrBlank() || birthDate.isNullOrEmpty() || birthDate.isNullOrBlank()) {
             throw IllegalArgumentException()
         }
 
