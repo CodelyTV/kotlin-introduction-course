@@ -2,6 +2,7 @@ package com.codely.demo
 
 import com.codely.demo.cat.BreedSearcher
 import com.codely.demo.cat.CatCreationException
+import com.codely.demo.cat.CatCreator
 import com.codely.demo.cat.CatCreatorAsync
 import com.codely.demo.cat.HttpBreedClient
 import com.codely.demo.cat.InvalidBirthDate
