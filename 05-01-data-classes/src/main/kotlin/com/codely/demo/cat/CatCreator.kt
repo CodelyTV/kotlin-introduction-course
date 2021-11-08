@@ -23,16 +23,16 @@ class CatCreator(val reader: Reader, val writer: Writer, val clock: Clock) {
 
         if (name.isNullOrBlank() || name.isNullOrEmpty() || origin.isNullOrEmpty() || origin.isNullOrBlank() || vaccinated.isNullOrEmpty() || vaccinated.isNullOrBlank() || dewormed.isNullOrEmpty() || dewormed.isNullOrBlank() || birthDate.isNullOrEmpty() || birthDate.isNullOrBlank()) {
             throw IllegalArgumentException()
-        } else {
-            return Cat(
-                id = UUID.fromString(id),
-                name = name,
-                origin = origin,
-                vaccinated = vaccinated.toBoolean(),
-                dewormed = dewormed.toBoolean(),
-                birthDate = LocalDate.parse(birthDate),
-                createdAt = clock.now()
-            )
         }
+
+        return Cat(
+            id = UUID.fromString(id),
+            name = name,
+            origin = origin,
+            vaccinated = vaccinated.toBoolean(),
+            dewormed = dewormed.toBoolean(),
+            birthDate = LocalDate.parse(birthDate),
+            createdAt = clock.now()
+        )
     }
 }

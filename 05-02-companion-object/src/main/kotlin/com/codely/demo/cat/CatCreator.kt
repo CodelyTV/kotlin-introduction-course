@@ -21,15 +21,25 @@ class CatCreator(val reader: Reader, val writer: Writer, val clock: Clock) {
 
         if (name.isNullOrBlank() || name.isNullOrEmpty() || origin.isNullOrEmpty() || origin.isNullOrBlank()) {
             throw IllegalArgumentException()
-        } else {
-            return Cat(
+        }
+
+        return if (vaccinated.toBoolean()) {
+            Cat.vaccinatedWith(
                 id = UUID.fromString(id),
                 name = name,
                 origin = origin,
-                vaccinated = vaccinated.toBoolean(),
+                birthDate = LocalDate.parse(birthDate),
+                createdAt = clock.now()
+            )
+        } else {
+            Cat.notVaccinatedWith(
+                id = UUID.fromString(id),
+                name = name,
+                origin = origin,
                 birthDate = LocalDate.parse(birthDate),
                 createdAt = clock.now()
             )
         }
+
     }
 }

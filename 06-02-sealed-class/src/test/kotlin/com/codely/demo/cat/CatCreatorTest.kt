@@ -1,6 +1,6 @@
 package com.codely.demo.cat
 
-import com.codely.demo.app.Clock
+import com.codely.demo.shared.Clock
 import com.codely.demo.shared.Reader
 import com.codely.demo.shared.Writer
 import io.mockk.every
