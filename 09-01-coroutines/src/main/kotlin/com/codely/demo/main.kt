@@ -2,7 +2,6 @@ package com.codely.demo
 
 import com.codely.demo.cat.BreedSearcher
 import com.codely.demo.cat.CatCreationException
-import com.codely.demo.cat.CatCreator
 import com.codely.demo.cat.CatCreatorAsync
 import com.codely.demo.cat.HttpBreedClient
 import com.codely.demo.cat.InvalidBirthDate
@@ -16,10 +15,11 @@ import com.codely.demo.cat.MapCatRepository
 import com.codely.demo.shared.Clock
 import com.codely.demo.shared.Reader
 import com.codely.demo.shared.Writer
+import org.http4k.client.JavaHttpClient
 
 fun main() {
     try {
-        CatCreatorAsync(Reader(), Writer(), Clock(), MapCatRepository(), BreedSearcher(HttpBreedClient())).create()
+        CatCreatorAsync(Reader(), Writer(), Clock(), MapCatRepository(), BreedSearcher(HttpBreedClient(JavaHttpClient()))).create()
     } catch (e: CatCreationException) {
         when (e) {
             is InvalidBirthDate -> println("Upss looks like the birth date was invalid, please remember to use the correct format")

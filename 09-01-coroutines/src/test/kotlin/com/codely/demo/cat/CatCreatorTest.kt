@@ -10,7 +10,6 @@ import org.http4k.core.HttpHandler
 import org.http4k.core.MemoryBody
 import org.http4k.core.MemoryResponse
 import org.http4k.core.Status
-import org.json.JSONArray
 import org.junit.jupiter.api.AfterEach
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
@@ -43,8 +42,10 @@ internal class CatCreatorTest {
         val searcher = BreedSearcher(HttpBreedClient(client))
         every { clock.now() } returns fixedDate
         every { reader.read() } returns id andThen name andThen origin andThen vaccinated andThen color andThen birthDate andThen breed
-        every { client.invoke(any()) } returns MemoryResponse(status = Status.OK, body = MemoryBody(
-            """
+        every { client.invoke(any()) } returns MemoryResponse(
+            status = Status.OK,
+            body = MemoryBody(
+                """
             [{
                 "alt_names": "",
                 "experimental": 0,
@@ -64,8 +65,9 @@ internal class CatCreatorTest {
                 "weight_imperial": "7  -  10",
                 "wikipedia_url": "https://en.wikipedia.org/wiki/Abyssinian_(cat)"
               }]
-            """.trimIndent()
-        ))
+                """.trimIndent()
+            )
+        )
 
         val creator = CatCreator(reader, writer, clock, repository, searcher)
         creator.create()
@@ -99,8 +101,10 @@ internal class CatCreatorTest {
         val searcher = BreedSearcher(HttpBreedClient(client))
         every { clock.now() } returns fixedDate
         every { reader.read() } returns id andThen name andThen origin andThen notVaccinated andThen color andThen birthDate andThen breed
-        every { client.invoke(any()) } returns MemoryResponse(status = Status.OK, body = MemoryBody(
-            """
+        every { client.invoke(any()) } returns MemoryResponse(
+            status = Status.OK,
+            body = MemoryBody(
+                """
             [{
                 "alt_names": "",
                 "experimental": 0,
@@ -120,8 +124,8 @@ internal class CatCreatorTest {
                 "weight_imperial": "7  -  10",
                 "wikipedia_url": "https://en.wikipedia.org/wiki/Abyssinian_(cat)"
               }]
-            """.trimIndent()
-        )
+                """.trimIndent()
+            )
         )
 
         val creator = CatCreator(reader, writer, clock, repository, searcher)
@@ -315,8 +319,10 @@ internal class CatCreatorTest {
         val client = mockk<HttpHandler>()
         val searcher = BreedSearcher(HttpBreedClient(client))
         every { clock.now() } returns fixedDate
-        every { client.invoke(any()) } returns MemoryResponse(status = Status.OK, body = MemoryBody(
-            """
+        every { client.invoke(any()) } returns MemoryResponse(
+            status = Status.OK,
+            body = MemoryBody(
+                """
             [{
                 "alt_names": "",
                 "experimental": 0,
@@ -336,8 +342,9 @@ internal class CatCreatorTest {
                 "weight_imperial": "7  -  10",
                 "wikipedia_url": "https://en.wikipedia.org/wiki/Abyssinian_(cat)"
               }]
-            """.trimIndent()
-        ))
+                """.trimIndent()
+            )
+        )
         every { reader.read() } returns id andThen name andThen origin andThen vaccinated andThen color andThen birthDate andThen "Invalid Breed"
 
         val creator = CatCreator(reader, writer, clock, repository, searcher)
