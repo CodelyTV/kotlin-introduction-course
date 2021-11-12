@@ -18,29 +18,29 @@ class CatCreator(
 ) {
     private lateinit var breedList: List<String>
     fun create(): Cat {
-        return runBlocking {
+        runBlocking {
             loadBreeds()
-            val id = Id.from(obtainInput("Please enter an id for your cat"))
-            val name = Name.from(obtainInput("Please enter the name of your cat"))
-            val origin = Cat.Origin.from(obtainInput("Please enter where your cat came from"))
-            val vaccinated = Cat.Vaccinated.from(obtainInput("Is your cat vaccinated?"))
-            val color = Cat.Color.from(obtainInput("What is the color of your cat?"))
-            val birthDate = Cat.BirthDate.from(obtainInput("When did your cat birth <yyyy-MM-dd>?"))
-            val breed = obtainBreed()
-            Cat.from(
-                id,
-                name,
-                origin,
-                birthDate,
-                color,
-                vaccinated,
-                clock.now(),
-                breed,
-            ).apply {
-                repository.save(this)
-            }.also {
-                writer.write("Your cat has been successfully created $it")
-            }
+        }
+        val id = Id.from(obtainInput("Please enter an id for your cat"))
+        val name = Name.from(obtainInput("Please enter the name of your cat"))
+        val origin = Cat.Origin.from(obtainInput("Please enter where your cat came from"))
+        val vaccinated = Cat.Vaccinated.from(obtainInput("Is your cat vaccinated?"))
+        val color = Cat.Color.from(obtainInput("What is the color of your cat?"))
+        val birthDate = Cat.BirthDate.from(obtainInput("When did your cat birth <yyyy-MM-dd>?"))
+        val breed = obtainBreed()
+        return Cat.from(
+            id,
+            name,
+            origin,
+            birthDate,
+            color,
+            vaccinated,
+            clock.now(),
+            breed,
+        ).apply {
+            repository.save(this)
+        }.also {
+            writer.write("Your cat has been successfully created $it")
         }
     }
 
