@@ -1,6 +1,5 @@
 package com.codely.demo
 
-import com.codely.demo.app.Clock
 import com.codely.demo.cat.CatCreationException
 import com.codely.demo.cat.CatCreator
 import com.codely.demo.cat.InvalidBirthDate
@@ -10,6 +9,7 @@ import com.codely.demo.cat.InvalidName
 import com.codely.demo.cat.InvalidOrigin
 import com.codely.demo.cat.InvalidVaccinated
 import com.codely.demo.cat.MapCatRepository
+import com.codely.demo.shared.Clock
 import com.codely.demo.shared.Reader
 import com.codely.demo.shared.Writer
 

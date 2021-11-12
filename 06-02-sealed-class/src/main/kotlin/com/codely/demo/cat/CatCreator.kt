@@ -1,6 +1,6 @@
 package com.codely.demo.cat
 
-import com.codely.demo.app.Clock
+import com.codely.demo.shared.Clock
 import com.codely.demo.shared.Reader
 import com.codely.demo.shared.Writer
 import java.time.LocalDate
@@ -8,44 +8,32 @@ import java.util.UUID
 
 class CatCreator(private val reader: Reader, private val writer: Writer, private val clock: Clock, private val repository: CatRepository) {
     fun create(): Cat {
-        writer.write("Please enter an id for your cat")
-        val id = reader.read()
-        writer.write("Please enter the name of your cat")
-        val name = reader.read()
-        writer.write("Please enter where your cat came from")
-        val origin = reader.read()
-        writer.write("Is your cat vaccinated?")
-        val vaccinated = reader.read()
-        writer.write("What is the color of your cat?")
-        val color = reader.read()
-        writer.write("When did your cat birth?")
-        val birthDate = reader.read()
+        val id = obtainInput("Please enter an id for your cat")
+        val name = Name.from(obtainInput("Please enter the name of your cat"))
+        val origin = obtainInput("Please enter where your cat came from")
+        val vaccinated = obtainInput("Is your cat vaccinated?")
+        val color = obtainInput("What is the color of your cat?")
+        val birthDate = obtainInput("When did your cat birth?")
 
-        if (name.isNullOrBlank() || name.isNullOrEmpty()) {
-            throw InvalidName(name)
-        }
         if (origin.isNullOrEmpty() || origin.isNullOrBlank()) {
             throw InvalidOrigin(origin)
-        }
-        if (color.isNullOrBlank() || color.isNullOrEmpty()) {
-            throw InvalidColor(color)
         }
 
         val cat = if (vaccinated.toBoolean()) {
             Cat.vaccinatedWith(
                 id = UUID.fromString(id),
-                name = name,
+                name = name.value,
                 origin = origin,
                 birthDate = LocalDate.parse(birthDate),
-                color = color,
+                color = Cat.Color.from(color).name,
                 createdAt = clock.now()
             )
         } else {
             Cat.notVaccinatedWith(
                 id = UUID.fromString(id),
-                name = name,
+                name = name.value,
                 origin = origin,
-                color = color,
+                color = Cat.Color.from(color),
                 birthDate = LocalDate.parse(birthDate),
                 createdAt = clock.now()
             )
@@ -54,4 +42,6 @@ class CatCreator(private val reader: Reader, private val writer: Writer, private
 
         return cat
     }
+
+    private fun obtainInput(message: String) = writer.write(message).run { reader.read() }
 }

@@ -1,6 +1,6 @@
 package com.codely.demo.cat
 
-import com.codely.demo.app.Clock
+import com.codely.demo.shared.Clock
 import com.codely.demo.shared.Reader
 import com.codely.demo.shared.Writer
 import io.mockk.every
@@ -69,7 +69,7 @@ internal class CatCreatorTest {
     }
 
     @Test
-    fun `should fail creating a cat without shelter`() {
+    fun `should fail creating a cat without origin`() {
         val reader = mockk<Reader>()
         val writer = mockk<Writer>(relaxed = true)
         val clock = mockk<Clock>()
@@ -81,7 +81,7 @@ internal class CatCreatorTest {
     }
 
     @Test
-    fun `should fail creating a cat with empty shelter`() {
+    fun `should fail creating a cat with empty origin`() {
         val reader = mockk<Reader>()
         val writer = mockk<Writer>(relaxed = true)
         val clock = mockk<Clock>()
