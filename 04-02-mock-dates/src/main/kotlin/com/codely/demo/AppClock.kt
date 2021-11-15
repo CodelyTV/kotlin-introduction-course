@@ -4,8 +4,8 @@ import java.time.LocalDate
 import java.time.Period
 import kotlin.system.exitProcess
 
-class Clock() {
-    fun now() = LocalDate.now()
+class Clock {
+    fun now(): LocalDate = LocalDate.now()
 }
 
 class AppClock(
