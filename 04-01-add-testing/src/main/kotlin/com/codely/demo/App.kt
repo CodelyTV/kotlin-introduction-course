@@ -7,14 +7,14 @@ import kotlin.system.exitProcess
 class Reader {
     fun read() = readLine()
 }
-
 class Writer {
     fun write(message: String) = println(message)
 }
 class Clock {
-    fun now() = LocalDate.now()
+    fun now(): LocalDate = LocalDate.now()
 }
-open class App(private val reader: Reader, private val writer: Writer, private val clock: Clock) {
+
+class App(private val reader: Reader, private val writer: Writer, private val clock: Clock) {
     fun execute() {
         writer.write("Please enter a date with the format <yyyy-MM-dd>")
         val line = reader.read()
@@ -50,5 +50,3 @@ open class App(private val reader: Reader, private val writer: Writer, private v
         }
     }
 }
-
-private fun supportNullableString(line: String?) = line
